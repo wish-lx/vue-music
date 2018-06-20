@@ -10,26 +10,30 @@ import Tab from 'components/tab/tab'
 Vue.use(Router)
 
 export default new Router({
-  routes:[
+  routes: [
+    {
+      path: '/',
+      redirect: '/recommend'
+    },
     {
       path: '/rank',
-      components: Rank
+      component: Rank
     },
     {
       path: '/recommend',
-      components: Recommend
+      component: Recommend
     },
     {
       path: '/search',
-      components: Search
+      component: Search
     },
     {
       path: '/singer',
-      components: Singer
+      component: Singer
     },
     {
       path: '/tab',
-      components: Tab
+      component: Tab
     }
   ]
 })
