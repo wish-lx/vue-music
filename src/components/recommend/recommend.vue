@@ -14,7 +14,7 @@ import {ERR_OK} from 'api/config'
      _getRecommend() {
        getRecommend().then((res) => {
          if (res.code === ERR_OK) {
-           console.log(res.data.slider)
+           
          }
        })
      }
