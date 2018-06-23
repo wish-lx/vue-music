@@ -2,7 +2,13 @@
   <div class="recommend">
     <div class="recommend-content">
       <div class="slider-wrapper">
-       
+       <slider>
+         <div v-for="item in recommends" :key="item.id">
+           <a :href="item.linkUrl">
+             <img :src="item.picUrl">
+           </a>
+         </div>
+       </slider>
       </div>
       <div class="recommend-list">
         <h1 class="list-title">
@@ -21,15 +27,18 @@ import Slider from 'base/slider/slider'
 import {ERR_OK} from 'api/config'
 
  export default {
-   
+   data() {
+     return {
+        recommends:[]
+     }
+   },
    created() {
     // this._getDiscList()
     // this._getRecommend()
     this.$ajax.get('/api/slider').then(response => { 
       const data = response.data
-      console.log(data)
       if (ERR_OK === data.code) {
-        console.log(data.data.slider)
+        this.recommends = data.data.slider
       }
     })
    },
