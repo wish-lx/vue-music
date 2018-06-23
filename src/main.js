@@ -3,10 +3,10 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import fastclick from 'fastclick'
-
+import Axios from 'axios'
 
 import 'common/stylus/index.styl'
-
+Vue.prototype.$ajax = Axios
 
 
 fastclick.attach(document.body)

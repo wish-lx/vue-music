@@ -9,30 +9,34 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const portfinder = require('portfinder')
+
 const axios = require('axios')
 var express = require('express')
 
 const HOST = process.env.HOST
 const PORT = process.env.PORT && Number(process.env.PORT)
+ 
+const appData = require('../data.json')
 
-var app = express()
-var apiRoutes = express.Router()
-apiRoutes.get('/getRecommend',function(req,res){
-  var url = 'https://c.y.qq.com/musichall/fcgi-bin/fcg_yqqhomepagerecommend.fcg'
+// 使用后端代理方式请求接口数据
+// var app = express()
+// var apiRoutes = express.Router()
+// apiRoutes.get('/getRecommend',function(req,res){
+//   var url = 'https://c.y.qq.com/musichall/fcgi-bin/fcg_yqqhomepagerecommend.fcg'
   
-  axios.get(url,{
-    headers: {
-      referer:'https://c.y.qq.com',
-      host:'c.y.qq.com'
-    },
-    params: req.query
-  }).then((response) => {
-     res.json(response.data)
-  }).catch((e) => {
-    console.log(e)
-  })
-})
-app.use('/api',apiRoutes)
+//   axios.get(url,{
+//     headers: {
+//       referer:'https://c.y.qq.com',
+//       host:'c.y.qq.com'
+//     },
+//     params: req.query
+//   }).then((response) => {
+//      res.json(response.data)
+//   }).catch((e) => {
+//     console.log(e)
+//   })
+// })
+// app.use('/api',apiRoutes)
 
 
 const devWebpackConfig = merge(baseWebpackConfig, {
@@ -64,6 +68,14 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     quiet: true, // necessary for FriendlyErrorsPlugin
     watchOptions: {
       poll: config.dev.poll,
+    },
+    before(app){
+      app.get('/api/slider', (req, res) => {
+        res.json({
+          code: appData.code,
+          data: appData.data
+        })
+      })
     }
   },
   plugins: [
