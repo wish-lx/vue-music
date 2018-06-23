@@ -2,7 +2,7 @@ import jsonp from 'common/js/jsonp'
 import {commonParams, options} from './config'
 
 
-
+// 使用jsonp方式请求歌单数据
 export function getDiscList() {
   const url = 'https://c.y.qq.com/splcloud/fcgi-bin/fcg_get_diss_by_tag.fcg'
 
