@@ -10,17 +10,21 @@
   </div>
 </template>
 <script type="text/ecmascript-6">
-import BScroll from 'better-scroll'
+// import BScroll from 'better-scroll'
+import {addClass} from 'common/js/dom'
 export default {
   props: {
+    // 循环播放
     loop: {
       type: Boolean,
       default: true
     },
+    // 无缝轮播
     autoPlay: {
       type: Boolean,
       default: true 
     },
+    // 轮播间隔时间
     interval: {
       type: Number,
       default: 4000
@@ -31,7 +35,7 @@ export default {
    setTimeout(() => {
      this._setSliderWidth()
      this._initSlider()
-   },20)
+   }, 20)
   },
   methods: {
     _setSliderWidth() {
@@ -39,13 +43,19 @@ export default {
 
       let width = 0
       let sliderWidth = this.$refs.slider.clientWidth
-      for(let i = 0; i < this.children.length; i++) {
+      for (let i = 0; i < this.children.length; i++) {
         let child = this.children[i]
-      },
-      _initSlider() {
-
+        addClass(child, 'slider-item ')
+        child.style.width = sliderWidth + 'px'
+        width += sliderWidth
       }
-    }
+      if (this.loop) {
+        width += 2 * sliderWidth
+      }
+      this.$refs.sliderGroup.style.width = width + 'px'
+    },
+      _initSlider() {
+     }
   }
 }
 </script>
@@ -67,7 +77,9 @@ export default {
            width: 100% 
            overflow: hidden
            text-decoration: none 
-
+          img 
+            display: block
+            width: 100%
            
 
 </style>
