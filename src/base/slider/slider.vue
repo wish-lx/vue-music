@@ -10,7 +10,7 @@
   </div>
 </template>
 <script type="text/ecmascript-6">
-// import BScroll from 'better-scroll'
+ import BScroll from 'better-scroll'
 import {addClass} from 'common/js/dom'
 export default {
   props: {
@@ -55,6 +55,18 @@ export default {
       this.$refs.sliderGroup.style.width = width + 'px'
     },
       _initSlider() {
+        // 初始化slider
+        this.slider = new BScroll(thiss.$refs.slider, {
+          scrollX: true,
+          scrollY: false,
+          momentum: false,
+          snap: true,
+          snapLoop: this.loop,
+          snapThreshold: 0.3,
+          snapSpeed: 400,
+          click: true
+      
+        })
      }
   }
 }
