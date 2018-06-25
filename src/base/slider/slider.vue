@@ -50,8 +50,8 @@ export default {
         width += sliderWidth
       }
       if (this.loop) {
-        width += 2 * sliderWidth
-      }
+          width += 2 * sliderWidth
+        }
       this.$refs.sliderGroup.style.width = width + 'px'
     },
       _initSlider() {
@@ -63,11 +63,16 @@ export default {
           scrollY: false,
           // 当快速在屏幕上滑动一段距离的时候，会根据滑动的距离和时间计算出动量，并生成滚动动画。设置为 true 则开启动画。
           momentum: false,
-          snap: true,
-          // 循环
-          snapLoop: this.loop,
-          snapThreshold: 0.3,
-          snapSpeed: 400,
+          // snap: true,
+          // // 循环
+          // snapLoop: this.loop,
+          // snapThreshold: 0.3,
+          // snapSpeed: 400,
+          snap: {
+            loop: this.loop,
+            snapThreshold: 0.3,
+            snapSpeed: 400
+          },
           // 允许点击
           click: true
       
