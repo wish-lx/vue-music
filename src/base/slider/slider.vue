@@ -44,10 +44,21 @@ export default {
      this._setSliderWidth()
      this._initDots()
      this._initSlider()
+     if (this.autoPlay) {
+       this._play()
+     }
    }, 20)
+  //  窗口改变轮播图自适应
+    window.addEventListener('resize', () => {
+      if (!this.slider) {
+        return
+      }
+      this._setSliderWidth(true)
+      this.slider.refresh()
+    })
   },
   methods: {
-    _setSliderWidth() {
+    _setSliderWidth(isResize) {
       this.children = this.$refs.sliderGroup.children
 
       let width = 0
@@ -58,7 +69,7 @@ export default {
         child.style.width = sliderWidth + 'px'
         width += sliderWidth
       }
-      if (this.loop) {
+      if (this.loop && !isResize) {
           width += 2 * sliderWidth
         }
       this.$refs.sliderGroup.style.width = width + 'px'
@@ -66,7 +77,7 @@ export default {
     _initDots() {
        this.dots = new Array(this.children.length)
     },
-      _initSlider() {
+    _initSlider() {
         // 初始化slider
         this.slider = new BScroll(this.$refs.slider, {
           // 支持横向滚动
@@ -84,10 +95,8 @@ export default {
             loop: this.loop,
             snapThreshold: 0.3,
             snapSpeed: 400
-          },
-          // 允许点击
-          click: true
-      
+          }
+          
         })
         // 当每一屏滑动完成的时候会触发scrollEnd事件
         // getCurrentPage():{ x: posX, y: posY,pageX: x, pageY: y} 
@@ -96,14 +105,27 @@ export default {
         // 作用：获取当前页面的信息。
         this.slider.on('scrollEnd', () => {
           let pageIndex = this.slider.getCurrentPage().pageX 
-          if(this.loop) {
-            pageIndex -= 1
-          }
+          // if (this.loop) {
+          //   pageIndex -= 1
+          // }
           this.currentPageIndex = pageIndex
 
-        })
+          if (this.autoPlay) {
+            clearTimeout(this.timer)
+            this._play()
+          }
+       })
      }
-  }
+    },
+    _play() {
+      let pageIndex = this.currentPageIndex + 1
+      if (this.loop) {
+        pageIndex += 1
+      }
+      this.timer = setTimeout(() => {
+        this.slider.goToPage(pageIndex, 0, 400)
+      }, this.interval)
+    }
 }
 </script>
 <style scoped lang="stylus" rel="stylesheet/stylus" >
