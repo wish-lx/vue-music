@@ -29,7 +29,8 @@ import {ERR_OK} from 'api/config'
  export default {
    data() {
      return {
-        recommends: []
+        recommends: [],
+        discList: [] 
      }
    },
    created() {
@@ -40,6 +41,13 @@ import {ERR_OK} from 'api/config'
       if (ERR_OK === data.code) {
         this.recommends = data.data.slider
       }
+    }),
+    this.$ajax.get('/api/list').then(response => { 
+      const data = response.data
+      if(ERR_OK === data.code) {
+        this.discList = data.data.list
+      } 
+      
     })
    },
    methods: {

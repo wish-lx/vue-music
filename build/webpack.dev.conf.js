@@ -17,7 +17,7 @@ const HOST = process.env.HOST
 const PORT = process.env.PORT && Number(process.env.PORT)
  
 const appData = require('../data.json')
-
+const appData1 = require('../data1.json')
 // 使用后端代理方式请求接口数据
 // var app = express()
 // var apiRoutes = express.Router()
@@ -74,6 +74,12 @@ const devWebpackConfig = merge(baseWebpackConfig, {
         res.json({
           code: appData.code,
           data: appData.data
+        })
+      }),
+      app.get('/api/list', (req, res) => {
+        res.json({
+          code: appData1.code,
+          data: appData1.data
         })
       })
     }

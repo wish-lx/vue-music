@@ -97,6 +97,7 @@ export default {
             snapSpeed: 400
           }
           
+          
         })
         // 当每一屏滑动完成的时候会触发scrollEnd事件
         // getCurrentPage():{ x: posX, y: posY,pageX: x, pageY: y} 
@@ -126,6 +127,7 @@ export default {
         this.slider.goToPage(pageIndex, 0, 400)
       }, this.interval)
     },
+    // 组件被销毁时，清除定时器，有助于内存释放
     destroyed() {
       clearTimeout(this.timer)
     }
