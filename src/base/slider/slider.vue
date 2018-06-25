@@ -125,7 +125,11 @@ export default {
       this.timer = setTimeout(() => {
         this.slider.goToPage(pageIndex, 0, 400)
       }, this.interval)
+    },
+    destroyed() {
+      clearTimeout(this.timer)
     }
+
 }
 </script>
 <style scoped lang="stylus" rel="stylesheet/stylus" >
