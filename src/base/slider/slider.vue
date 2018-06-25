@@ -138,6 +138,7 @@ export default {
   @import '../../common/stylus/variable'
     .slider
       min-height: 1px 
+      
       .slider-group
         position: relative 
         overflow: hidden
@@ -159,7 +160,7 @@ export default {
         position: absolute 
         right: 0
         left: 0
-        bottom: 20px 
+        bottom: 12px 
         text-align: center
         font-size: 0
         .dot 
