@@ -64,6 +64,7 @@ import {ERR_OK} from 'api/config'
  }
 </script>
 <style scoped lang="stylus" rel="stylesheet/stylus" >
-  
+  .recommend
+    position: relative
 
 </style>

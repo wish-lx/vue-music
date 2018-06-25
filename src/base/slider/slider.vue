@@ -4,15 +4,23 @@
       <slot>
       </slot>
     </div>
-    <div class="dots">
-        
+    <div class="dots" >
+        <span class="dot" v-for="(item, index) in dots" :class="{active:
+        currentPageIndex === index}">
+        </span>
     </div>
   </div>
 </template>
 <script type="text/ecmascript-6">
- import BScroll from 'better-scroll'
+import BScroll from 'better-scroll'
 import {addClass} from 'common/js/dom'
 export default {
+  data() {
+   return {
+     dots: [],
+     currentPageIndex: 0
+   }
+  },
   props: {
     // 循环播放
     loop: {
@@ -34,6 +42,7 @@ export default {
     // 保证DOM渲染成功
    setTimeout(() => {
      this._setSliderWidth()
+     this._initDots()
      this._initSlider()
    }, 20)
   },
@@ -53,6 +62,9 @@ export default {
           width += 2 * sliderWidth
         }
       this.$refs.sliderGroup.style.width = width + 'px'
+    },
+    _initDots() {
+       this.dots = new Array(this.children.length)
     },
       _initSlider() {
         // 初始化slider
@@ -76,6 +88,19 @@ export default {
           // 允许点击
           click: true
       
+        })
+        // 当每一屏滑动完成的时候会触发scrollEnd事件
+        // getCurrentPage():{ x: posX, y: posY,pageX: x, pageY: y} 
+        // 其中，x 和 y 表示偏移的坐标值，
+        // pageX 和 pageY 表示横轴方向和纵轴方向的页面数。
+        // 作用：获取当前页面的信息。
+        this.slider.on('scrollEnd', () => {
+          let pageIndex = this.slider.getCurrentPage().pageX 
+          if(this.loop) {
+            pageIndex -= 1
+          }
+          this.currentPageIndex = pageIndex
+
         })
      }
   }
@@ -102,6 +127,23 @@ export default {
           img 
             display: block
             width: 100%
-           
+      .dots
+        position: absolute 
+        right: 0
+        left: 0
+        bottom: 20px 
+        text-align: center
+        font-size: 0
+        .dot 
+          display: inline-block
+          margin: 0 4px 
+          width: 8px 
+          height: 8px 
+          border-radius: 50% 
+          background-color: $color-text-l
+          &.active 
+           width: 20px
+           border-radius:5px 
+           background: $color-text-ll     
 
 </style>
