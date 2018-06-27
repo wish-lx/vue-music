@@ -46,6 +46,14 @@ export default {
       // 刷新scroll,重新计算高度
       refresh() {
         this.scroll && this.scroll.refresh()
+      },
+      // 监听数据变化，刷新scroll
+      watch: {
+        data() {
+          setTimeout( () => {
+            this._initScroll()
+          }, 20)
+        }
       }
     }
   }
