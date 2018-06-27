@@ -18,7 +18,7 @@
           <ul>
             <li class="item" v-for="item in discList" :key="item.id">
                 <div class="icon">
-                  <img @load="loadImage" :src="item.imgurl" width="60">
+                  <img @load="loadImage" v-lazy="item.imgurl" width="60">
                 </div>
                 <div class="text">
                   <h2 class="name" v-html="item.creator.name"></h2>
