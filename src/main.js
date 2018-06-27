@@ -5,6 +5,8 @@ import router from './router'
 import fastclick from 'fastclick'
 import Axios from 'axios'
 import VueLazyload from 'vue-lazyload'
+
+
 import 'common/stylus/index.styl'
 Vue.prototype.$ajax = Axios
 
