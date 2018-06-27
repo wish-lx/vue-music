@@ -1,15 +1,15 @@
 <template>
   <div class="recommend">
-    <scroll class="recommend-content">
+    <scroll class="recommend-content" :data="discList">
       <div>
         <div v-if="recommends.length" class="slider-wrapper">
-        <slider>
-          <div v-for="item in recommends" :key="item.id">
-            <a :href="item.linkUrl">
-              <img :src="item.picUrl">
-            </a>
-          </div>
-        </slider>
+          <slider>
+            <div v-for="item in recommends" :key="item.id">
+              <a :href="item.linkUrl">
+                <img :src="item.picUrl">
+              </a>
+            </div>
+          </slider>
         </div>
         <div class="recommend-list">
           <h1 class="list-title">
@@ -32,10 +32,11 @@
   </div>
 </template>
 <script type="text/ecmascript-6">
+
 import Slider from 'base/slider/slider'
 // import {getDiscList, getRecommend} from 'api/recommend'
 import {ERR_OK} from 'api/config'
-
+import Scroll from 'base/scroll/scroll'
  export default {
    data() {
      return {
@@ -76,7 +77,9 @@ import {ERR_OK} from 'api/config'
     //  }
    },
    components: {
-     Slider
+     Slider,
+     Scroll
+     
    }
  }
 </script>
