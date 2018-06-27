@@ -1,6 +1,6 @@
 <template>
   <div class="recommend">
-    <scroll class="recommend-content" :data="discList">
+    <scroll ref="scroll" class="recommend-content" :data="discList">
       <div>
         <div v-if="recommends.length" class="slider-wrapper">
           <slider>
@@ -18,7 +18,7 @@
           <ul>
             <li class="item" v-for="item in discList" :key="item.id">
                 <div class="icon">
-                  <img :src="item.imgurl" width="60">
+                  <img @load="loadImage" :src="item.imgurl" width="60">
                 </div>
                 <div class="text">
                   <h2 class="name" v-html="item.creator.name"></h2>
@@ -61,6 +61,12 @@ import Scroll from 'base/scroll/scroll'
     })
    },
    methods: {
+     loadImage() {
+       if (!this.checkLoaded) {
+          this.$refs.scroll.refresh()
+          this.checkLoaded = true
+       }
+     }
     //  _getRecommend() {
     //    getRecommend().then((res) => {
     //      if (res.code === ERR_OK) {

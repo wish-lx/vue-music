@@ -33,7 +33,7 @@ export default {
             this.refresh()
           }, 20)
         }
-      } ,
+      },
     methods: {
       _initScroll() {
          if (!this.$refs.wrapper) {
