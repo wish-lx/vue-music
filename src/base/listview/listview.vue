@@ -1,20 +1,21 @@
 <template>
   <scroll class="listview" :data="data" ref="listview">
      <ul>
-       <li v-for="group in data" class="list-group" ref="listGroup">
+       <li v-for="group in data" class="list-group" ref="listGroup" :key="group.id">
           <h2 class="list-group-title">{{group.title}}</h2>  
           <ul>
-            <li  v-for="item in group.items" class="list-group-item">
+            <li  v-for="item in group.items" class="list-group-item" :key="item.id">
               <img v-lazy="item.avatar" alt="" class="avatar">
               <span class="name">{{item.name}}</span>
             </li>
           </ul>
        </li>
      </ul>
-     <div class="list-shortcut" @touchstart="onShortcutTouchStart">
+     <div class="list-shortcut" @touchstart="onShortcutTouchStart" 
+     @touchmove.stop.prevent="onShortcutTouchMove">
        <ul>
          <li v-for="(item,index) in shortcutList" class="item"
-         :data-index="index"  >
+         :data-index="index" :key="item.id" >
            {{item}}
          </li>
        </ul>
@@ -25,23 +26,46 @@
 <script type="text/ecmascript-6">
 import Scroll from 'base/scroll/scroll'
 import {getData} from 'common/js/dom'
+const ANCHOR_HEIGHT = 18
 export default {
+  data() {
+    return {
+
+    }
+  },
   props: {
     data: {
       type: Array,
       default: []
     }
   },
+  created() {
+   this.touch = {}
+  }, 
   methods: {
     onShortcutTouchStart(e) {
       let anchorIndex = getData(e.target, 'index')
-      this.$refs.listview.scrollToElement(this.$refs.listGroup[anchorIndex],9000)
+      console.log(anchorIndex)
+      let firstTouch = e.touches[0]
+      this.touch.y1 = firstTouch.pageY
+      this.touch.anchorIndex = anchorIndex
+      this._scrollTo(anchorIndex)
+    },
+    onShortcutTouchMove(e) {
+      let firstTouch = e.touches[0]
+      this.touch.y2 = firstTouch.pageY
+      let delta = (this.touch.y2 - this.touch.y1) / ANCHOR_HEIGHT | 0
+      let anchorIndex = parseInt(this.touch.anchorIndex) + delta
+      this._scrollTo(anchorIndex)
+    },
+    _scrollTo(index) {
+      this.$refs.listview.scrollToElement(this.$refs.listGroup[index], 9000)
     }
   },
   computed: {
     shortcutList() {
       return this.data.map((group) => {
-        return group.title.substr(0,1)
+        return group.title.substr(0, 1)
       })
     }
   },
