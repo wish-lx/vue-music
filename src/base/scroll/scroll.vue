@@ -54,6 +54,12 @@ export default {
       // 数据改变，刷新scroll,重新计算高度
       refresh() {
         this.scroll && this.scroll.refresh()
+      },
+      scrollTO() {
+        this.scroll && this.scroll.scrollTo.apply(this.scroll, arguments)
+      },
+      scrollToElement() {
+        this.scroll && this.scroll.scrollToElement.apply(this.scroll, arguments)
       }
       
     }
