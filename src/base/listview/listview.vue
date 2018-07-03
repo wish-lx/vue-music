@@ -1,5 +1,11 @@
 <template>
-  <scroll class="listview" :data="data" ref="listview">
+  <scroll 
+  class="listview" 
+  :data="data" 
+  ref="listview"
+  :listenScroll="listenScroll"
+  @scroll= "scroll"
+  :probeType = "probeType">
      <ul>
        <li v-for="group in data" class="list-group" ref="listGroup" :key="group.id">
           <h2 class="list-group-title">{{group.title}}</h2>  
@@ -15,7 +21,9 @@
      @touchmove.stop.prevent="onShortcutTouchMove">
        <ul>
          <li v-for="(item,index) in shortcutList" class="item"
-         :data-index="index" :key="item.id" >
+         :data-index="index" 
+         :key="item.id"
+         :class="{'current':currentIndex === index}" >
            {{item}}
          </li>
        </ul>
@@ -26,11 +34,13 @@
 <script type="text/ecmascript-6">
 import Scroll from 'base/scroll/scroll'
 import {getData} from 'common/js/dom'
+
 const ANCHOR_HEIGHT = 18
 export default {
   data() {
     return {
-
+       scrollY: -1,
+       currentIndex: 0
     }
   },
   props: {
@@ -41,11 +51,13 @@ export default {
   },
   created() {
    this.touch = {}
+   this.listenScroll = true
+   this.listHeight = []
+   this.probeType = 3
   }, 
   methods: {
     onShortcutTouchStart(e) {
       let anchorIndex = getData(e.target, 'index')
-      console.log(anchorIndex)
       let firstTouch = e.touches[0]
       this.touch.y1 = firstTouch.pageY
       this.touch.anchorIndex = anchorIndex
@@ -58,8 +70,57 @@ export default {
       let anchorIndex = parseInt(this.touch.anchorIndex) + delta
       this._scrollTo(anchorIndex)
     },
+    scroll(pos) {
+      this.scrollY = pos.y
+    },
     _scrollTo(index) {
+      // 处理边界情况 顶部底部 以及顶部底部padding
+      if (!index && index !== 0) {
+          return
+      }
+      if (index < 0) {
+        index = 0
+      } else if (index > this.listHeight.length - 2) {
+        index = this.listHeight.length - 2
+      }
+      this.scrollY = -this.listHeight[index]
       this.$refs.listview.scrollToElement(this.$refs.listGroup[index], 9000)
+    },
+    _calculateHeight() {
+      this.listHeight = [] 
+      const list = this.$refs.listGroup
+      let height = 0
+      for (let i = 0; i < list.length; i++) {
+        let item = list[i]
+        height += item.clientHeight
+        this.listHeight.push(height)
+      }
+    }
+  },
+  watch: {
+    data() {
+      setTimeout(() => {
+        this._calculateHeight()
+      }, 20)
+    },
+    scrollY(newY) {
+      const listHeight = this.listHeight
+      // 当滚动到顶部 newY>0
+      if (newY > 0) {
+        this.currentIndex = 0
+           return
+      }
+      // 在中间部分滚动
+      for (let i = 0; i < listHeight.length - 1; i++) {
+        let height1 = listHeight[i]
+        let height2 = listHeight[ i + 1 ]
+        if (-newY >= height1 && -newY < height2) {
+           this.currentIndex = i
+           return
+        }
+        // 当滚动到底部，且-newY大于最后一个元素的上限
+        this.currentIndex = listHeight.length - 2
+      }
     }
   },
   computed: {
