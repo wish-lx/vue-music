@@ -33,12 +33,16 @@
          {{fixedTitle}}
        </h1>
      </div>
+     <div class="loading-container" v-show="!data.length">
+      <loading></loading>
+    </div>
   </scroll>
 </template>
 
 <script type="text/ecmascript-6">
 import Scroll from 'base/scroll/scroll'
 import {getData} from 'common/js/dom'
+import loading from 'base/loading/loading'
 
 const ANCHOR_HEIGHT = 18
 const TITLT_HEIGHT = 30
@@ -152,7 +156,8 @@ export default {
     
   },
   components: {
-    Scroll
+    Scroll,
+    loading
   }
 }
 </script>
