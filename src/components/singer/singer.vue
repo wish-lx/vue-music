@@ -1,6 +1,7 @@
 <template>
   <div class="singer">
-    <list-view :data="this.singers"></list-view>
+    <list-view @select="selectSinger" :data="this.singers"></list-view>
+    <router-view></router-view>
   </div>
 </template>
 <script type="text/ecmascript-6">
@@ -21,6 +22,11 @@ const HOT_SINGER_LEN = 10
       this._getSingerList()
     },
     methods: {
+      selectSinger(singer) {
+        this.$router.push({
+          path: `/singer/${singer.id}`
+        })
+      },
       _getSingerList() {
         getSingerList().then((res) => {
           if (res.code === ERR_OK) {

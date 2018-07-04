@@ -1,7 +1,10 @@
 <template>
-   <div class="singer-detail">
+<transition name="slide">
+  <div class="singer-detail">
 
    </div>
+</transition>
+   
 </template>
 
 <script type="text/ecmascript-6">
@@ -13,13 +16,17 @@ export default {
 }
 </script>
 <style scoped lang='stylus' rel="stylesheet/stylus">
-@import 'common/stylus/variable.styl'
-.singrt-detail
- position: fixed
+@import '../../common/stylus/variable.styl'
+.singer-detail
+  position: fixed
   z-index: 100
   top: 0
   left: 0
   right: 0
   bottom: 0
-  background: $color-background-
+  background: $color-background
+.slide-enter-active, .slide-leave-active
+   transition: all 0.3s
+.slide-enter, .slide-leave-to
+   transform: reanslate3d(100%, 0, 0)
 </style>

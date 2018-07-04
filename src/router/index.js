@@ -31,7 +31,7 @@ export default new Router({
     {
       path: '/singer',
       component: Singer,
-      children:[
+      children: [
         {
           path: ':id',
           component: SingerDetail
