@@ -88,14 +88,18 @@ export default {
     },
     _scrollTo(index) {
       // 处理边界情况 顶部底部 以及顶部底部padding
+      // index为null的时候
       if (!index && index !== 0) {
           return
       }
+      // 处理边界问题
       if (index < 0) {
         index = 0
       } else if (index > this.listHeight.length - 2) {
         index = this.listHeight.length - 2
       }
+
+
       this.scrollY = -this.listHeight[index]
       this.$refs.listview.scrollToElement(this.$refs.listGroup[index], 9000)
     },
@@ -120,6 +124,7 @@ export default {
       }, 20)
     },
     scrollY(newY) {
+      // 判断当前位置在哪个区间内 listHeight 上限  下限
       const listHeight = this.listHeight
       // 当滚动到顶部 newY>0
       if (newY > 0) {
