@@ -1,4 +1,4 @@
-<template>
+<template>  
   <scroll 
   class="listview" 
   :data="data" 
@@ -50,6 +50,7 @@ export default {
   data() {
     return {
        scrollY: -1,
+      //  右侧字母索引
        currentIndex: 0,
        diff: -1
     }
@@ -82,6 +83,7 @@ export default {
       this._scrollTo(anchorIndex)
     },
     scroll(pos) {
+      // 实时获取better-scroll滚动的y轴距离
       this.scrollY = pos.y
     },
     _scrollTo(index) {
@@ -97,10 +99,12 @@ export default {
       this.scrollY = -this.listHeight[index]
       this.$refs.listview.scrollToElement(this.$refs.listGroup[index], 9000)
     },
+    // 计算每一个列表的高度
     _calculateHeight() {
       this.listHeight = [] 
       const list = this.$refs.listGroup
       let height = 0
+      this.listHeight.push(height)
       for (let i = 0; i < list.length; i++) {
         let item = list[i]
         height += item.clientHeight
@@ -110,6 +114,7 @@ export default {
   },
   watch: {
     data() {
+      // dom渲染好了之后计算高度
       setTimeout(() => {
         this._calculateHeight()
       }, 20)
@@ -135,8 +140,8 @@ export default {
       }
      },
       diff (newVal) {
-        let fixedTop = (newVal > 0 && newVal < TITLT_HEIGHT ) ? newVal - TITLT_HEIGHT :0
-        if(this.fixedTop === fixedTop) {
+        let fixedTop = (newVal > 0 && newVal < TITLT_HEIGHT ) ? newVal - TITLT_HEIGHT : 0
+        if (this.fixedTop === fixedTop) {
           return
         }
         this.fixedTop = fixedTop
@@ -151,7 +156,7 @@ export default {
     },
     fixedTitle() {
       if (this.scrollY > 0) return
-      return this.data[this.currentIndex] ? this.data[this.currentIndex].title:'' 
+      return this.data[this.currentIndex] ? this.data[this.currentIndex].title : '' 
     }
     
   },

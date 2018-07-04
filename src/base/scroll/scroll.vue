@@ -19,7 +19,7 @@ export default {
         type: Array,
         default: null
       },
-      // 是否监听scroll滚动事件
+      // scroll是否监听滚动事件
       listenScroll: {
         type: Boolean,
         default: false
@@ -45,11 +45,13 @@ export default {
             return
         }
         this.scroll = new BScroll(this.$refs.wrapper, {
-          // probeType: this.probeType,
-          // click: this.click
+          probeType: this.probeType,
+          click: this.click
         })
         if (this.listenScroll) {
+          // vue实例
           let me = this
+          // 监听滚动事件，拿到位置
           this.scroll.on('scroll', (pos) => {
             me.$emit('scroll', pos)
           })
