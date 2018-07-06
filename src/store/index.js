@@ -8,7 +8,7 @@ import CreateLogger from 'vuex/dist/logger'
 
 Vue.use(Vuex)
 
-const debug = precess.env.NODE_ENV !== 'production'
+const debug = process.env.NODE_ENV !== 'production'
 
 export default new Vuex.Store({
   actions,
@@ -16,5 +16,5 @@ export default new Vuex.Store({
   State,
   Mutations,
   strict: debug,
-  plugins : debug ? [CreateLogger()] : []
+  plugins: debug ? [CreateLogger()] : []
 })
