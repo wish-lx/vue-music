@@ -8,10 +8,12 @@
       <div class="filter"></div>
     </div>
     <div class="bg-layer" ref="layer"></div>
-    <scroll @scroll="scroll" :probe-type="probeType" :listen-scroll="listenScroll" :data="songs" class="list" ref="list">
-       <div class="song-list-wrapper">
-         <song-list :songs="songs"></song-list>
-       </div>
+    <scroll :data="songs" @scroll="scroll"
+            :listen-scroll="listenScroll" :probe-type="probeType" class="list" ref="list">
+      <div class="song-list-wrapper">
+        <song-list :songs="songs" ></song-list>
+      </div>
+      
     </scroll>
   </div>
 </template>
@@ -55,10 +57,20 @@ const RESERVED_HEIGHT = 40
       }
     },
     watch: {
-      scrollY(newY) {
-        let translateY = Math.max(this.minTranslateY, newY)
-        this.$refs.layer.style['transform'] = `translate3d(0,${translateY},0}`
-        this.$ref.layer.style['webkitTransform'] = `translate3d(0,${translateY},0}`
+      scrollY(newVal) {
+        let translateY = Math.max(this.minTranslateY, newVal)
+        let zIndex = 0
+        this.$refs.layer.style['transform'] = `translate3d(0,${translateY}px,0)`
+        this.$refs.layer.style['webkitTransform'] = `translate3d(0,${translateY},0}`
+        if (newVal < this.minTranslateY) {
+          zIndex = 10
+          this.$refs.bgImage.style.paddingTop = 0
+          this.$refs.bgImage.style.height = `${RESERVED_HEIGHT}px`
+        } else {
+         this.$refs.bgImage.style.paddingTop = '70%'
+          this.$refs.bgImage.style.height = 0
+        }
+         this.$refs.bgImage.style.zIndex = zIndex
       }
     },
     mounted() {
@@ -106,36 +118,36 @@ const RESERVED_HEIGHT = 40
       font-size: $font-size-large
       color: $color-text
     .bg-image
-      position: relative
-      width: 100%
-      height: 0
-      padding-top: 70%
-      transform-origin: top
-      background-size: cover
-      .play-wrapper
-        position: absolute
-        bottom: 20px
-        z-index: 50
+        position: relative
         width: 100%
-        .play
-          box-sizing: border-box
-          width: 135px
-          padding: 7px 0
-          margin: 0 auto
-          text-align: center
-          border: 1px solid $color-theme
-          color: $color-theme
-          border-radius: 100px
-          font-size: 0
-          .icon-play
-            display: inline-block
-            vertical-align: middle
-            margin-right: 6px
-            font-size: $font-size-medium-x
-          .text
-            display: inline-block
-            vertical-align: middle
-            font-size: $font-size-small
+        height: 0
+        padding-top: 70%
+        transform-origin: top
+        background-size: cover
+        // .play-wrapper
+        //   position: absolute
+        //   bottom: 20px
+        //   z-index: 50
+        //   width: 100%
+        //   .play
+        //     box-sizing: border-box
+        //     width: 135px
+        //     padding: 7px 0
+        //     margin: 0 auto
+        //     text-align: center
+        //     border: 1px solid $color-theme
+        //     color: $color-theme
+        //     border-radius: 100px
+        //     font-size: 0
+        //     .icon-play
+        //       display: inline-block
+        //       vertical-align: middle
+        //       margin-right: 6px
+        //       font-size: $font-size-medium-x
+        //     .text
+        //       display: inline-block
+        //       vertical-align: middle
+        //       font-size: $font-size-small
       .filter
         position: absolute
         top: 0
@@ -149,7 +161,7 @@ const RESERVED_HEIGHT = 40
       background: $color-background
     .list
       position: fixed
-      top: 0
+      top: 280px
       bottom: 0
       width: 100%
       background: $color-background

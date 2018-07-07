@@ -16,7 +16,7 @@
     props: {
       songs: {
         type: Array,
-        default: ''
+        default: []
       }
     },
     methods: {
@@ -27,8 +27,8 @@
  }
 </script>
 <style scoped lang="stylus" rel="stylesheet/stylus" >
-   @import "../../common/stylus/variable"
-   @import "../../common/stylus/mixin"
+     @import "../../common/stylus/variable"
+     @import "../../common/stylus/mixin"
 
   .song-list
     .item
@@ -47,12 +47,12 @@
           width: 25px
           height: 24px
           background-size: 25px 24px
-          // &.icon0
-          //   bg-image('first')
-          // &.icon1
-          //   bg-image('second')
-          // &.icon2
-          //   bg-image('third')
+          &.icon0
+            bg-image('first')
+          &.icon1
+            bg-image('second')
+          &.icon2
+            bg-image('third')
         .text
           color: $color-theme
           font-size: $font-size-large
