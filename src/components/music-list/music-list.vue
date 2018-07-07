@@ -60,8 +60,14 @@ const RESERVED_HEIGHT = 40
       scrollY(newVal) {
         let translateY = Math.max(this.minTranslateY, newVal)
         let zIndex = 0
+        let scale = 1
         this.$refs.layer.style['transform'] = `translate3d(0,${translateY}px,0)`
         this.$refs.layer.style['webkitTransform'] = `translate3d(0,${translateY},0}`
+        const percent = Math.abs(newVal / this.imageHeight)
+        if(newVal > 0) {
+          scale = 1 + percent
+          zIndex = 10
+        }
         if (newVal < this.minTranslateY) {
           zIndex = 10
           this.$refs.bgImage.style.paddingTop = 0
@@ -71,6 +77,8 @@ const RESERVED_HEIGHT = 40
           this.$refs.bgImage.style.height = 0
         }
          this.$refs.bgImage.style.zIndex = zIndex
+         this.$refs.bgImage.style['transform'] = `scale(${scale})`
+          this.$refs.bgImage.style['webkitTransform'] = `scale(${scale})`
       }
     },
     mounted() {
