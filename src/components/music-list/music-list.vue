@@ -76,7 +76,7 @@ const RESERVED_HEIGHT = 40
     mounted() {
       this.imageHeight = this.$refs.bgImage.clientHeight
       this.minTranslateY = -this.imageHeight + RESERVED_HEIGHT
-      this.$refs.list.$el.style.top = `${this.$refs.bgImage.clientheight}px`
+      this.$refs.list.$el.style.top = `${this.$refs.bgImage.clientHeight}px`
     },
     components: {
       Scroll,
@@ -158,10 +158,11 @@ const RESERVED_HEIGHT = 40
     .bg-layer
       position: relative
       height: 100%
+
       background: $color-background
     .list
       position: fixed
-      top: 280px
+      top: 0
       bottom: 0
       width: 100%
       background: $color-background
