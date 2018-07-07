@@ -2,11 +2,10 @@ import 'babel-polyfill'
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import Store from './store'
 import fastclick from 'fastclick'
 import Axios from 'axios'
 import VueLazyload from 'vue-lazyload'
-
+import store from './store'
 
 import 'common/stylus/index.styl'
 Vue.prototype.$ajax = Axios
@@ -23,6 +22,6 @@ Vue.use(VueLazyload, {
 new Vue({
   el: '#app',
   router,
-  Store,
+  store,
   render: h => h(App)
 })

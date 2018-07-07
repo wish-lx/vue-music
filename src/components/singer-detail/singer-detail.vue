@@ -23,7 +23,7 @@ export default {
   },
   methods: {
     _getDetail() {
-      if(!this.singer.id) {
+      if (!this.singer.id) {
         this.$router.push('/singer')
       }
       getSingerDetail(this.singer.id).then((res) => {
@@ -48,5 +48,5 @@ export default {
 .slide-enter-active, .slide-leave-active
    transition: all 0.3s
 .slide-enter, .slide-leave-to
-   transform: reanslate3d(100%, 0, 0)
+   transform: translate3d(100%, 0, 0)
 </style>
