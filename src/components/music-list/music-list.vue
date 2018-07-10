@@ -28,7 +28,7 @@
 <script type="text/ecmascript-6">
 import Scroll from 'base/scroll/scroll'
 import SongList from 'base/song-list/song-list'
-import loading from  'base/loading/loading'
+import loading from 'base/loading/loading'
 import {mapActions} from 'vuex'
 const RESERVED_HEIGHT = 40
  export default {
@@ -86,10 +86,10 @@ const RESERVED_HEIGHT = 40
         this.$refs.layer.style['transform'] = `translate3d(0,${translateY}px,0)`
         this.$refs.layer.style['webkitTransform'] = `translate3d(0,${translateY},0}`
         const percent = Math.abs(newVal / this.imageHeight)
-        if(newVal > 0) {
+        if (newVal > 0) {
           scale = 1 + percent
           zIndex = 10
-        } else{
+        } else {
           blur = Math.min(20 * percent, 20)
         }
         this.$refs.filter.style['backdrop-filter'] = `blur(${blur}px)`
@@ -102,7 +102,6 @@ const RESERVED_HEIGHT = 40
          this.$refs.bgImage.style.paddingTop = '70%'
           this.$refs.bgImage.style.height = 0
           this.$refs.playBtn.style.display = ''
-          
         }
          this.$refs.bgImage.style.zIndex = zIndex
          this.$refs.bgImage.style['transform'] = `scale(${scale})`
