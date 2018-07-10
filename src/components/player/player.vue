@@ -1,5 +1,5 @@
 <template>
-  <div class="player" v-show="playlist.length > 0">
+  <div class="player" v-show="playlist.length>0">
     <div class="normal-player" v-show="fullScreen">
       <div class="background">
         <img  width="100%" height="100%" :src="currentSong.image">
@@ -40,7 +40,7 @@
         </div>
       </div>
     </div>
-    <div class="mini-player" v-show="!fullScreen">
+    <div class="mini-player" v-show="!fullScreen" @click="open">
       <div class="icon">
         <img width="40" height="40" :src="currentSong.image" >
       </div>
@@ -70,9 +70,12 @@ export default {
     back() {
       this.setFullScreen(false)
     },
-    ...mapMutations([
+    open() {
+      this.setFullScreen(true)
+    },
+    ...mapMutations({
       setFullScreen: 'SET_FULL_SCREEN'
-    ])
+  })
   }
 }
 </script>

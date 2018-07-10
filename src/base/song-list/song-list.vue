@@ -20,7 +20,7 @@
       }
     },
     methods: {
-      selectItem(item, index){
+      selectItem(item, index) {
         this.$emit('select', item, index)
       },
       getDesc(song) {
