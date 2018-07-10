@@ -17,7 +17,7 @@
     <scroll :data="songs" @scroll="scroll"
             :listen-scroll="listenScroll" :probe-type="probeType" class="list" ref="list">
       <div class="song-list-wrapper">
-        <song-list :songs="songs" ></song-list>
+        <song-list @select="selectItem" :songs="songs" ></song-list>
       </div>
       <div class="loading-container" v-show="!songs.length">
         <loading></loading>
@@ -60,6 +60,7 @@ const RESERVED_HEIGHT = 40
       this.listenScroll = true
     },
     methods: {
+      selectItem(item, index) {},
       scroll(pos) {
        this.scrollY = pos.y
       },
