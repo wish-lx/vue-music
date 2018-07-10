@@ -29,6 +29,7 @@
 import Scroll from 'base/scroll/scroll'
 import SongList from 'base/song-list/song-list'
 import loading from  'base/loading/loading'
+import {mapActions} from 'vuex'
 const RESERVED_HEIGHT = 40
  export default {
     props: {
@@ -60,13 +61,21 @@ const RESERVED_HEIGHT = 40
       this.listenScroll = true
     },
     methods: {
-      selectItem(item, index) {},
+      selectItem(item, index) {
+        this.selectPlay({
+          list: this.songs,
+          index
+        })
+      },
       scroll(pos) {
        this.scrollY = pos.y
       },
       back() {
        this.$router.back()
-      }
+      },
+      ...mapActions([
+        'selectPlay'
+      ])
     },
     watch: {
       scrollY(newVal) {

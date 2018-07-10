@@ -1,4 +1,4 @@
-// 异步操作 异步修改 或者对mutation做一些封装
+// 异步操作 异步修改 或者对mutation做一些封装,提交mutation
 import * as types from './mutation-types'
 
 export const selectPlay = function ({commit, state}, {list, index}) {
