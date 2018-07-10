@@ -3,6 +3,7 @@
  <music-list :songs="songs" :bg-image="bgImage" :title="title">
 
  </music-list>
+ 
 </transition>
    
 </template>
@@ -33,6 +34,7 @@ export default {
   created() {
     this._getDetail()
   },
+  
   components: {
     MusicList
   },
