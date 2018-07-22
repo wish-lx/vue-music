@@ -86,6 +86,17 @@ export default {
     open() {
       this.setFullScreen(true)
     },
+    // javascript钩子 animation动画
+    _getPosAndScale() {
+      const targetWidth = 40
+      const paddingLeft = 40
+      const paddingBottom = 30
+      const paddingTop = 80
+      const width = window.innerWidth * 0.8
+      const scale = targetWidth / width
+      const x = -(window.innerWidth / 2 - paddingLeft)
+      const y = window.innerHeight - 
+    },
     ...mapMutations({
       setFullScreen: 'SET_FULL_SCREEN'
     })
