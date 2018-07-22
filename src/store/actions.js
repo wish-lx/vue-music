@@ -1,6 +1,7 @@
 // 异步操作 异步修改 或者对mutation做一些封装,提交mutation
 import * as types from './mutation-types'
 
+// 选择播放
 export const selectPlay = function ({commit, state}, {list, index}) {
  commit(types.SET_SEQUENCE_LIST, list)
  commit(types.SET_PLAYLIST, list)

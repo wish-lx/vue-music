@@ -11,8 +11,8 @@ export const sequenceList = state => state.sequenceList
 
 export const mode = state => state.mode
 
-export const currenIndex = state => state.currentIndex
-
+export const currentIndex = state => state.currentIndex
+// 计算属性功能
 export const currentSong = (state) => {
-  return state.playlist(state.currentIndex) || {}
+  return state.playlist[state.currentIndex] || {}
 }
