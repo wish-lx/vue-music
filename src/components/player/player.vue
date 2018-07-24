@@ -126,8 +126,16 @@ export default {
       // | 0 是向上取整
       interval = interval | 0 
       const minute = interval / 60 | 0
-      const second = interval % 60
+      const second = this._pad(interval % 60)
       return `${minute}:${second}`
+    },
+    _pad(num, n = 2) {
+      let len = num.toString().length
+      while(len < n) {
+        num = '0' + num
+        len++
+      }
+      return num
     },
     updateTime(e) {
       this.currentTime = e.target.currentTime
