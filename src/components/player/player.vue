@@ -35,7 +35,7 @@
               <i class="icon-sequence"></i>
             </div>
             <div class="icon i-center">
-              <i class="icon-play"></i>
+              <i @click="togglePlaying" class="icon-play"></i>
             </div>
             <div class="icon i-right">
               <i class="icon-next"></i>
@@ -77,16 +77,26 @@ export default {
       this.$nextTick(() => {
         this.$refs.audio.play()
       })
+    },
+    playing(newPlaying) {
+      const audio = this.$refs.audio
+      this.$nextTick(()=>{
+        newPlaying ? audio.play() : audio.pause()
+      })
     }
   },
   computed: {
     ...mapGetters([
       'fullScreen',
       'playlist',
-      'currentSong'
+      'currentSong',
+      'playing'
     ])
   },
   methods: {
+    togglePlaying() {
+      this.setPlayingState(!this.playing)
+    },
     back() {
       this.setFullScreen(false)
     },
@@ -165,13 +175,14 @@ export default {
       }
     },
     ...mapMutations({
-      setFullScreen: 'SET_FULL_SCREEN'
+      setFullScreen: 'SET_FULL_SCREEN',
+      setPlayingState: 'SET_PLAYING_STATE'
     })
   }
 }
 </script>
 <style scoped lang='stylus' rel="stylesheet/stylus">
-@import "~common/stylus/variable"
+  @import "~common/stylus/variable"
   @import "~common/stylus/mixin"
 
   .player
