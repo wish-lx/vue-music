@@ -30,7 +30,7 @@
           <div class="progress-wrapper">
             <div class="time time-l">{{format(currentTime)}}</div>
             <div class="progress-bar-wrapper">
-
+               <progressBar></progressBar>
             </div>
             <div class="time time-l">{{format(currentSong.duration)}}</div>
           </div>
@@ -79,6 +79,7 @@
 <script type="text/ecmascript-6">
 import {mapGetters, mapMutations} from 'vuex'
 import animations from 'create-keyframe-animation'
+import progressBar from 'base/progress-bar/progress-bar'
 export default {
   data() {
     return {
@@ -129,6 +130,7 @@ export default {
       const second = this._pad(interval % 60)
       return `${minute}:${second}`
     },
+    // 分秒补 0
     _pad(num, n = 2) {
       let len = num.toString().length
       while(len < n) {
@@ -259,6 +261,9 @@ export default {
       setPlayingState: 'SET_PLAYING_STATE',
       setCurrentIndex: 'SET_CURRENT_INDEX'
     })
+  },
+  components: {
+    progressBar
   }
 }
 </script>
