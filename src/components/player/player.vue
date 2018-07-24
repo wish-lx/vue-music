@@ -30,7 +30,7 @@
           <div class="progress-wrapper">
             <div class="time time-l">{{format(currentTime)}}</div>
             <div class="progress-bar-wrapper">
-               <progressBar :percent="percent"></progressBar>
+               <progressBar :percent="percent" @percentChange="onProgressBarChange"></progressBar>
             </div>
             <div class="time time-l">{{format(currentSong.duration)}}</div>
           </div>
@@ -126,6 +126,14 @@ export default {
     ])
   },
   methods: {
+    onProgressBarChange(percent) {
+        const currentTime = this.currentSong.duration * percent
+        this.$refs.audio.currentTime = currentTime
+        if (!this.playing) {
+          this.togglePlaying()
+        }
+        
+      },
     // 将时间戳转换为分秒
     format(interval) {
       // | 0 是向上取整
