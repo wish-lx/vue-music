@@ -27,6 +27,13 @@
           </div>
         </div>
         <div class="bottom">
+          <div class="progress-wrapper">
+            <div class="time time-l">{{format(currentTime)}}</div>
+            <div class="progress-bar-wrapper">
+
+            </div>
+            <div class="time time-l">{{format(currentSong.duration)}}</div>
+          </div>
           <div class="operators">
             <div class="icon i-left">
               <i class="icon-sequence"></i>
@@ -64,7 +71,8 @@
         </div>
       </div>
     </transition> 
-    <audio  ref="audio" :src="currentSong.url" @canplay="ready" @error="error"></audio>
+    <audio  ref="audio" :src="currentSong.url" @canplay="ready" @error="error" 
+    @timeupdate="updateTime"></audio>
   </div>
 </template>
 
@@ -74,7 +82,8 @@ import animations from 'create-keyframe-animation'
 export default {
   data() {
     return {
-      songReady: false
+      songReady: false,
+      currentTime: 0
     }
   },
   watch: {
@@ -112,8 +121,16 @@ export default {
     ])
   },
   methods: {
-    error(){
-
+    // 将时间戳转换为分秒
+    format(interval) {
+      // | 0 是向上取整
+      interval = interval | 0 
+      const minute = interval / 60 | 0
+      const second = interval % 60
+      return `${minute}:${second}`
+    },
+    updateTime(e) {
+      this.currentTime = e.target.currentTime
     },
     ready() {
       this.songReady = true
