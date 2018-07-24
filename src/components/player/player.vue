@@ -87,6 +87,7 @@ export default {
       this.setFullScreen(true)
     },
     // javascript钩子 animation动画
+    // 得到距离差和缩放比例
     _getPosAndScale() {
       const targetWidth = 40
       const paddingLeft = 40
@@ -94,8 +95,13 @@ export default {
       const paddingTop = 80
       const width = window.innerWidth * 0.8
       const scale = targetWidth / width
-      const x = -(window.innerWidth / 2 - paddingLeft)
-      const y = window.innerHeight - 
+      const x = -(window.innerWidth / 2 - paddingLeft - targetWidth / 2)
+      const y = window.innerHeight - width / 2 - paddingTop - paddingBottom - targetWidth / 2
+      return {
+        x,
+        y,
+        scale
+      }
     },
     ...mapMutations({
       setFullScreen: 'SET_FULL_SCREEN'
