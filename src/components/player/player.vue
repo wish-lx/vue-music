@@ -4,7 +4,7 @@
                 @enter="enter"
                 @after-enter="afterEnter"
                 @leave="leave"
-                @after-leave="leaveEnter"
+                @after-leave="afterLeave"
     >  
       <div class="normal-player" v-show="fullScreen">
         <div class="background">
@@ -64,7 +64,7 @@
         </div>
       </div>
     </transition> 
-    
+    <audio  ref="audio" :src="currentSong.url"></audio>
   </div>
 </template>
 
@@ -72,6 +72,13 @@
 import {mapGetters, mapMutations} from 'vuex'
 import animations from 'create-keyframe-animation'
 export default {
+  watch: {
+    currentSong() {
+      this.$nextTick(() => {
+        this.$refs.audio.play()
+      })
+    }
+  },
   computed: {
     ...mapGetters([
       'fullScreen',
@@ -87,7 +94,7 @@ export default {
       this.setFullScreen(true)
     },
     enter(el, done) {
-      const {x, y, scale} =this._getPosAndScale()
+      const {x, y, scale} = this._getPosAndScale()
       let animation = {
         0: {
           transform: `translate3d(${x}px, ${y}px, 0) scale(${scale})`
@@ -113,7 +120,7 @@ export default {
       animations.unregisterAnimation('move')
       this.$refs.cdWrapper.style.animation = ''
     },
-    leave(el, done){
+    leave(el, done) {
        const {x, y, scale} = this._getPosAndScale()
        let animation = {
          0: {
@@ -136,7 +143,7 @@ export default {
        })
        animations.runAnimation(this.$refs.cdWrapper, 'out', done)
     },
-    leaveEnter(){
+    afterLeave() {
        animations.unregisterAnimation('out')
        this.$refs.cdWrapper.style.animation = ''
     },
