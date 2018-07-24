@@ -35,7 +35,7 @@
               <i class="icon-sequence"></i>
             </div>
             <div class="icon i-center">
-              <i @click="togglePlaying" class="icon-play"></i>
+              <i @click="togglePlaying" :class="playIcon"></i>
             </div>
             <div class="icon i-right">
               <i class="icon-next"></i>
@@ -57,7 +57,7 @@
           <p class="desc" v-html="currentSong.singer"></p>
         </div>
         <div class="control">
-            <i class="icon-play-mini"></i>
+            <i @click.stop="togglePlaying" :class="miniIcon"></i>
         </div>
         <div class="control">
           <i class="icon-playlist"></i>
@@ -86,6 +86,12 @@ export default {
     }
   },
   computed: {
+    playIcon() {
+       return this.playing ? 'icon-pause' : 'icon-play'
+    },
+    miniIcon() {
+       return this.playing ? 'icon-pause-mini' : 'icon-play-mini'
+    },
     ...mapGetters([
       'fullScreen',
       'playlist',
