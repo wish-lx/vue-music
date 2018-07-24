@@ -30,7 +30,7 @@
           <div class="progress-wrapper">
             <div class="time time-l">{{format(currentTime)}}</div>
             <div class="progress-bar-wrapper">
-               <progressBar></progressBar>
+               <progressBar :percent="percent"></progressBar>
             </div>
             <div class="time time-l">{{format(currentSong.duration)}}</div>
           </div>
@@ -81,6 +81,7 @@ import {mapGetters, mapMutations} from 'vuex'
 import animations from 'create-keyframe-animation'
 import progressBar from 'base/progress-bar/progress-bar'
 export default {
+  
   data() {
     return {
       songReady: false,
@@ -101,6 +102,9 @@ export default {
     }
   },
   computed: {
+    percent() {
+      return this.currentTime / this.currentSong.duration 
+    },
     cdCls() {
        return this.playing ? 'play' : 'play pause'
     },
