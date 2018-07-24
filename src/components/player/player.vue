@@ -32,13 +32,13 @@
               <i class="icon-sequence"></i>
             </div>
             <div class="icon i-left">
-              <i class="icon-sequence"></i>
+              <i @click="prev" class="icon-sequence"></i>
             </div>
             <div class="icon i-center">
               <i @click="togglePlaying" :class="playIcon"></i>
             </div>
             <div class="icon i-right">
-              <i class="icon-next"></i>
+              <i  @click="next" class="icon-next"></i>
             </div>
             <div class="icon i-right">
               <i class="icon-not-favorite"></i>
@@ -99,10 +99,31 @@ export default {
       'fullScreen',
       'playlist',
       'currentSong',
-      'playing'
+      'playing',
+       'currentIndex'
     ])
   },
   methods: {
+    prev() {
+      let index = this.currentIndex + 1
+      if(index === this.playlist.length) {
+        index = 0
+      }
+      this.setCurrentIndex(index)
+      if(!this.playing) {
+        this.togglePlaying()
+      }
+    },
+    next() {
+      let index = this.currentIndex - 1
+      if(index === -1) {
+        index = this.playlist.length - 1
+      }
+      this.setCurrentIndex(index)
+      if(!this.playing) {
+        this.togglePlaying()
+      }
+    },
     togglePlaying() {
       this.setPlayingState(!this.playing)
     },
@@ -185,7 +206,8 @@ export default {
     },
     ...mapMutations({
       setFullScreen: 'SET_FULL_SCREEN',
-      setPlayingState: 'SET_PLAYING_STATE'
+      setPlayingState: 'SET_PLAYING_STATE',
+      setCurrentIndex: 'SET_CURRENT_INDEX'
     })
   }
 }
