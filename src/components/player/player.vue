@@ -31,13 +31,13 @@
             <div class="icon i-left">
               <i class="icon-sequence"></i>
             </div>
-            <div class="icon i-left">
+            <div class="icon i-left" :class="disableCls">
               <i @click="prev" class="icon-sequence"></i>
             </div>
-            <div class="icon i-center">
+            <div class="icon i-center" :class="disableCls">
               <i @click="togglePlaying" :class="playIcon"></i>
             </div>
-            <div class="icon i-right">
+            <div class="icon i-right" :class="disableCls">
               <i  @click="next" class="icon-next"></i>
             </div>
             <div class="icon i-right">
@@ -64,7 +64,7 @@
         </div>
       </div>
     </transition> 
-    <audio  ref="audio" :src="currentSong.url"></audio>
+    <audio  ref="audio" :src="currentSong.url" @canplay="ready" @error="error"></audio>
   </div>
 </template>
 
@@ -72,6 +72,11 @@
 import {mapGetters, mapMutations} from 'vuex'
 import animations from 'create-keyframe-animation'
 export default {
+  data() {
+    return {
+      songReady: false
+    }
+  },
   watch: {
     currentSong() {
       this.$nextTick(() => {
@@ -95,6 +100,9 @@ export default {
     miniIcon() {
        return this.playing ? 'icon-pause-mini' : 'icon-play-mini'
     },
+    disableCls() {
+       return this.songReady ? '' : 'disable'
+    },
     ...mapGetters([
       'fullScreen',
       'playlist',
@@ -104,7 +112,19 @@ export default {
     ])
   },
   methods: {
+    error(){
+
+    },
+    ready() {
+      this.songReady = true
+    },
+    error() {
+      this.songReady = true
+    },
     prev() {
+      if(!this.songReady) {
+        return
+      }
       let index = this.currentIndex + 1
       if(index === this.playlist.length) {
         index = 0
@@ -113,8 +133,12 @@ export default {
       if(!this.playing) {
         this.togglePlaying()
       }
+      this.songReady = false
     },
     next() {
+      if(!this.songReady) {
+        return
+      }
       let index = this.currentIndex - 1
       if(index === -1) {
         index = this.playlist.length - 1
@@ -123,6 +147,7 @@ export default {
       if(!this.playing) {
         this.togglePlaying()
       }
+      this.songReady = false
     },
     togglePlaying() {
       this.setPlayingState(!this.playing)
