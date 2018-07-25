@@ -62,7 +62,7 @@ export default {
   },
   watch: {
     percent(newPercent) {
-      if(newPercent >= 0) {
+      if (newPercent >= 0) {
         const barWidth = this.$refs.progressBar.clientWidth - progressBtnWidth
         const offsetWidth = newPercent * barWidth
         this._offset(offsetWidth)

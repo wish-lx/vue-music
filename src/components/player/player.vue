@@ -64,7 +64,9 @@
           <p class="desc" v-html="currentSong.singer"></p>
         </div>
         <div class="control">
-            <i @click.stop="togglePlaying" :class="miniIcon"></i>
+          <progress-circle :radius="radius" :percent="percent">
+            <i @click.stop="togglePlaying" class="icon-mini" :class="miniIcon"></i>
+          </progress-circle>
         </div>
         <div class="control">
           <i class="icon-playlist"></i>
@@ -80,12 +82,14 @@
 import {mapGetters, mapMutations} from 'vuex'
 import animations from 'create-keyframe-animation'
 import progressBar from 'base/progress-bar/progress-bar'
+import progressCircle from 'base/progress-circle/progress-circle'
 export default {
   
   data() {
     return {
       songReady: false,
-      currentTime: 0
+      currentTime: 0,
+      radius:32
     }
   },
   watch: {
@@ -96,7 +100,7 @@ export default {
     },
     playing(newPlaying) {
       const audio = this.$refs.audio
-      this.$nextTick(()=>{
+      this.$nextTick(() => {
         newPlaying ? audio.play() : audio.pause()
       })
     }
@@ -132,7 +136,6 @@ export default {
         if (!this.playing) {
           this.togglePlaying()
         }
-        
       },
     // 将时间戳转换为分秒
     format(interval) {
@@ -145,7 +148,7 @@ export default {
     // 分秒补 0
     _pad(num, n = 2) {
       let len = num.toString().length
-      while(len < n) {
+      while (len < n) {
         num = '0' + num
         len++
       }
@@ -161,29 +164,29 @@ export default {
       this.songReady = true
     },
     prev() {
-      if(!this.songReady) {
+      if (!this.songReady) {
         return
       }
       let index = this.currentIndex + 1
-      if(index === this.playlist.length) {
+      if (index === this.playlist.length) {
         index = 0
       }
       this.setCurrentIndex(index)
-      if(!this.playing) {
+      if (!this.playing) {
         this.togglePlaying()
       }
       this.songReady = false
     },
     next() {
-      if(!this.songReady) {
+      if (!this.songReady) {
         return
       }
       let index = this.currentIndex - 1
-      if(index === -1) {
+      if (index === -1) {
         index = this.playlist.length - 1
       }
       this.setCurrentIndex(index)
-      if(!this.playing) {
+      if (!this.playing) {
         this.togglePlaying()
       }
       this.songReady = false
@@ -275,7 +278,8 @@ export default {
     })
   },
   components: {
-    progressBar
+    progressBar,
+    progressCircle
   }
 }
 </script>
