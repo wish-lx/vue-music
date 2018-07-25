@@ -74,7 +74,7 @@
       </div>
     </transition> 
     <audio  ref="audio" :src="currentSong.url" @canplay="ready" @error="error" 
-    @timeupdate="updateTime"></audio>
+    @timeupdate="updateTime" @ended="end"></audio>
   </div>
 </template>
 
@@ -95,7 +95,10 @@ export default {
     }
   },
   watch: {
-    currentSong() {
+    currentSong(newSong, oldSong) {
+      if (newSong.id === oldSong.id) {
+        return
+      }
       this.$nextTick(() => {
         this.$refs.audio.play()
       })
@@ -166,6 +169,18 @@ export default {
     },
     ready() {
       this.songReady = true
+    },
+    end() {
+      if(this.mode === playMode.loop) {
+        this.loop()
+      } else {
+        this.next()
+      }
+    },
+    // 循环播放
+    loop() {
+      this.$refs.audio.currentTime = 0
+      this.$refs.audio.play()
     },
     error() {
       this.songReady = true
