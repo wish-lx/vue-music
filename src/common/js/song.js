@@ -40,7 +40,7 @@ export function createSong(musicData) {
 
   })
 }
-// 将singer对象转化为字符串
+// 将singer对象转化为字符串 
 function filterSinger(singer) {
   let ret = []
   if (!singer) {
