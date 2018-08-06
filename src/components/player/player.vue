@@ -4,8 +4,8 @@
                 @enter="enter"
                 @after-enter="afterEnter"
                 @leave="leave"
-                @after-leave="afterLeave"
-    >  
+                @after-leave="afterLeave"> 
+     
       <div class="normal-player" v-show="fullScreen">
         <div class="background">
           <img  width="100%" height="100%" :src="currentSong.image">
@@ -30,7 +30,9 @@
           <div class="progress-wrapper">
             <div class="time time-l">{{format(currentTime)}}</div>
             <div class="progress-bar-wrapper">
-               <progressBar :percent="percent" @percentChange="onProgressBarChange"></progressBar>
+               <progressBar :percent="percent" @percentChange="onProgressBarChange">
+
+               </progressBar>
             </div>
             <div class="time time-l">{{format(currentSong.duration)}}</div>
           </div>
@@ -223,6 +225,8 @@ export default {
     open() {
       this.setFullScreen(true)
     },
+    // cd飞入飞出动画
+    // javascript钩子 animation动画
     enter(el, done) {
       const {x, y, scale} = this._getPosAndScale()
       let animation = {
@@ -277,7 +281,7 @@ export default {
        animations.unregisterAnimation('out')
        this.$refs.cdWrapper.style.animation = ''
     },
-    // javascript钩子 animation动画
+    
     // 得到距离差和缩放比例
     _getPosAndScale() {
       const targetWidth = 40
@@ -317,8 +321,8 @@ export default {
       setFullScreen: 'SET_FULL_SCREEN',
       setPlayingState: 'SET_PLAYING_STATE',
       setCurrentIndex: 'SET_CURRENT_INDEX',
-      setPlayMode:'SET_PLAY_MODE',
-      setPlayList:'SET_PLAYLIST'
+      setPlayMode: 'SET_PLAY_MODE',
+      setPlayList: 'SET_PLAYLIST'
     })
   },
   components: {
